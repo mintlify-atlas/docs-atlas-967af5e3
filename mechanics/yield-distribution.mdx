@@ -1,7 +1,7 @@
 ---
-title: "Yield Distribution Model: How Dawn Splits Yield"
+title: "Dawn Yield Distribution: How Senior and Junior Share Returns"
 sidebarTitle: "Yield Distribution"
-description: "The Yield Distribution Model (YDM) automatically splits yield between Senior and Junior tranches based on utilization — no governance votes or manual adjustments required."
+description: "The Yield Distribution Model (YDM) splits yield between Senior and Junior tranches based on utilization — no governance votes or manual tuning needed."
 ---
 
 Every Royco Dawn market channels yield from a single underlying source. The **Yield Distribution Model (YDM)** governs how those returns are divided between Senior and Junior depositors. The core principle is simple: Junior earns a risk premium for providing first-loss protection, and the size of that premium scales automatically with supply and demand. When Junior capital is scarce, Junior earns more. When Junior capital is plentiful, Junior earns less. No governance votes or manual adjustments are ever required.
@@ -11,7 +11,7 @@ Every Royco Dawn market channels yield from a single underlying source. The **Yi
 Each market defines three parameters at creation that anchor Junior's yield share at key points along the utilization spectrum. Together they trace a curve — flat at low utilization, steep near the top.
 
 | Parameter | Utilization Point | What It Represents |
-|-----------|------------------|--------------------|
+|-----------|------------------|---------------------|
 | **Y0** | 0% utilization | Junior yield share when capital far exceeds the minimum coverage requirement |
 | **YT** | 90% utilization | Junior yield share at the target operating point |
 | **Y100** | 100% utilization | Junior yield share when Junior is exactly at the coverage floor |

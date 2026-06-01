@@ -1,5 +1,5 @@
 ---
-title: "Vault Products: srRoyUSDC and roywstETH"
+title: "Royco Dawn Vault Products: srRoyUSDC and roywstETH"
 sidebarTitle: "Vault Products"
 description: "Royco Dawn offers two managed vaults — srRoyUSDC for Senior tranche USDC yield and roywstETH for ETH holders — both curated by Dialectic."
 ---
@@ -27,7 +27,7 @@ For participants who prefer not to evaluate and manage individual Dawn markets d
 
 Dialectic is a Swiss crypto-native investment firm founded in 2019. The firm specializes in systematic, market-neutral DeFi yield strategies, powered by proprietary on-chain automation and risk-management tooling built by its in-house research arm, Atelier. As the curator for both Royco Dawn vaults, Dialectic is responsible for all investment decisions: which yield sources to allocate to, coverage levels, position sizes, collateral management, and withdrawal processing.
 
-The Royco Foundation retains the ability to revoke curator access at any time. The curator operates on each vault's multisig with scoped permissions — it can allocate and rebalance within approved parameters, but cannot move funds to unauthorized addresses or alter protocol mechanics.
+The curator operates on each vault's multisig with scoped permissions — it can allocate and rebalance within approved parameters, but cannot move funds to unauthorized addresses or alter protocol mechanics. The Royco Foundation retains the ability to revoke curator access at any time.
 
 ## Senior Royco USDC (srRoyUSDC)
 
@@ -99,7 +99,7 @@ The vault processes withdrawals in the following priority sequence:
 
 ## Fees
 
-Vault-level fees are collected programmatically through an on-chain fee mechanism. All current fees are as follows:
+Fees are collected programmatically through an on-chain fee mechanism. All current fees are as follows:
 
 | Product | Management Fee | Performance Fee | Fee on Yield Share (Risk Premium) |
 |---|---|---|---|
@@ -113,6 +113,13 @@ For swaps, LiFi route fees apply at a rate of **3 bps for stablecoins** and **20
 <Note>
   Where applicable, performance fees are calculated on yield generated, defined as all income received by a vault minus borrowing costs. No fee is charged in periods where the yield is zero or negative. Fees are visible on-chain.
 </Note>
+
+## Audits
+
+Royco's full audit reports are available in the [Security & Audits](/security/audits) section. The custodians managing vault infrastructure have completed independent audits:
+
+- **Concrete** has been audited by [Cantina](https://docs.concrete.xyz/assets/files/cantinacode-concrete-finance-813b45d86d6450723139b0cc55857c4d.pdf/) and [Halborn](https://docs.concrete.xyz/assets/files/Standard-Implementation-9948d7fcebb518e5c29051bc2326b5ec.pdf/).
+- **Makina** has been audited by [ChainSecurity, Enigma Dark, Sigma Prime, Cantina, and Ottersec](https://docs.makina.finance/contracts/security).
 
 ## Flow of Funds
 

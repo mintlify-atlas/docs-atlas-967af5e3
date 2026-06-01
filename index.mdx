@@ -1,12 +1,15 @@
 ---
 title: "Royco Dawn: Non-Custodial DeFi Risk-Tranching Protocol"
 sidebarTitle: "Home"
-description: "Royco Dawn splits yield sources into Senior and Junior risk tranches, giving depositors smart-contract-enforced downside coverage or higher yield for first-loss exposure."
+description: "Royco Dawn splits yield sources into Senior and Junior risk tranches with smart-contract-enforced coverage or higher yield for first-loss exposure."
 ---
 
 Royco Dawn is a non-custodial risk-tranching protocol that takes a given yield source — a lending market, staking deposit, or tokenized RWA — and splits it into two risk tranches. Senior depositors earn yield with a smart-contract-enforced downside buffer. Junior depositors absorb first losses in exchange for a higher yield premium. All parameters are enforced on-chain with no manual intervention.
 
 <CardGroup cols={2}>
+  <Card title="Introduction" icon="book-open" href="/introduction">
+    Learn what Royco Dawn is, how the two tranches work, and why the YDM creates a self-balancing yield system.
+  </Card>
   <Card title="How Dawn Works" icon="circle-nodes" href="/how-dawn-works">
     Understand the tranching mechanism, coverage requirements, and how yield is distributed between Senior and Junior.
   </Card>
@@ -23,7 +26,10 @@ Royco Dawn is a non-custodial risk-tranching protocol that takes a given yield s
     Review the full risk landscape: smart contract, underlying strategy, vault-level, and operational risks.
   </Card>
   <Card title="Key Addresses" icon="file-contract" href="/security/key-addresses">
-    Find all deployed contract addresses on Ethereum and Avalanche.
+    Find all deployed contract addresses for the Royco Dawn protocol.
+  </Card>
+  <Card title="FAQ" icon="circle-question" href="/reference/faq">
+    Answers to common questions about tranches, vaults, withdrawals, and risk.
   </Card>
 </CardGroup>
 
@@ -31,7 +37,7 @@ Royco Dawn is a non-custodial risk-tranching protocol that takes a given yield s
 
 <Steps>
   <Step title="A yield source is made available">
-    The Royco Foundation evaluates and onboards yield sources — lending markets, staking strategies, or tokenized RWAs — based on audit status, track record, and risk scoring.
+    The Royco Foundation evaluates and onboards yield sources — lending markets, staking strategies, or tokenized RWAs — based on audit status, time since deployment, minimum size, and risk scoring.
   </Step>
   <Step title="A Dawn market is created">
     A tranche market is deployed on top of the yield source. Coverage minimums, utilization targets, and yield curve parameters are set per market.
@@ -54,7 +60,3 @@ Royco Dawn is a non-custodial risk-tranching protocol that takes a given yield s
     Earns higher yield by acting as first-loss capital. Receives a risk premium paid by Senior in exchange for absorbing any drawdown from the first dollar.
   </Card>
 </CardGroup>
-
-<Note>
-  Royco Dawn is deployed on Ethereum and Avalanche. All protocol state — coverage ratios, yield rates, vault composition, and fee accrual — is publicly verifiable on-chain.
-</Note>
