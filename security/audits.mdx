@@ -1,0 +1,61 @@
+---
+title: "Security Audits and Bug Bounty Program"
+sidebarTitle: "Security & Audits"
+description: "Royco Dawn has undergone four independent security audits and maintains a $250,000 active bug bounty on Immunefi, plus real-time monitoring via Hypernative."
+---
+
+Royco Dawn's security posture is built on multiple, independent layers of protection. The protocol has undergone four independent smart contract audits covering both the underlying vault infrastructure and the core tranche contracts, maintains an active $250,000 bug bounty program on Immunefi, and is monitored in real time by Hypernative for anomalous onchain activity. Access controls ensure that only KYC-verified participants can deposit directly into vaults, and a scoped permission architecture limits what any single actor — including the curator — can do with deposited funds.
+
+## Access Controls
+
+All direct vault depositors are KYC'd before they can interact with the protocol. Funds can only be withdrawn to pre-approved addresses, ensuring that capital cannot be redirected to unauthorized destinations regardless of how an interaction is initiated.
+
+## Smart Contract Audits
+
+The protocol's core smart contract infrastructure has undergone four independent security reviews spanning both the vault foundation and the tranche-specific logic.
+
+| Auditor | Scope | Type |
+|---|---|---|
+| Halborn | Vault infrastructure (Concrete Earn v2 Core — Standard + Async) | Manual review |
+| Cantina Public Competition | Royco Dawn protocol contracts | Competitive audit |
+| Hexens | Royco Dawn protocol contracts | Manual review |
+| Certora | Royco Dawn protocol contracts | Manual review + Formal Verification |
+
+Full audit reports are available in the [roycoprotocol/royco-dawn](https://github.com/roycoprotocol/royco-dawn) GitHub repository under the `/audit` directory.
+
+## Curator Infrastructure Audits
+
+The vault curator's own operational infrastructure has also been independently reviewed. The Makina V1.1 integration audit is publicly available at [docs.makina.finance/contracts/security](https://docs.makina.finance/contracts/security).
+
+## Bug Bounty Program
+
+The protocol maintains an active **$250,000 bug bounty program** through Immunefi, accessible at [immunefi.com/bug-bounty/royco](https://immunefi.com/bug-bounty/royco/). Rewards are scaled to the severity of the reported finding.
+
+The scope of the bug bounty covers the protocol's core smart contracts. In particular, the program targets any vulnerability where a privileged role can bypass whitelist protections or direct funds to non-whitelisted addresses — the class of exploit most likely to result in material depositor harm.
+
+## Real-Time Monitoring
+
+Hypernative is configured for real-time onchain monitoring of the protocol. This includes detection of:
+
+- Anomalous contract interactions
+- Unusual fund movements
+- Known attack patterns and exploit signatures
+
+The protocol also maintains an upgrade system and an emergency response plan to enable rapid containment and remediation in the event that a threat is identified.
+
+## Permission Architecture as Security
+
+The protocol's permission architecture is itself a meaningful security control. The curator can only perform actions that have been explicitly granted within its scoped permission set. This means:
+
+- Funds **cannot be routed to arbitrary addresses**
+- Protocol parameters **cannot be modified outside the defined permission boundaries**
+
+These constraints are enforced at the smart contract level and cannot be overridden by the curator unilaterally.
+
+<Note>
+  The Foundation Root Multisig operates with a **timelock on critical parameter changes**, ensuring that depositors receive advance notice of any significant modifications and have the opportunity to exit the protocol before those changes take effect.
+</Note>
+
+---
+
+_This document is provided for informational purposes only and does not constitute investment advice, a solicitation, or an offer to sell any securities or financial instruments. Participation in Royco Dawn products involves risk, including the potential loss of all capital deployed. Prospective participants should conduct their own independent due diligence and consult with qualified legal, financial, and tax advisors before making any investment decisions._

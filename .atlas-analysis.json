@@ -1,0 +1,77 @@
+{
+  "projectType": "saas",
+  "projectName": "Royco Dawn",
+  "projectDescription": "A non-custodial DeFi risk-tranching protocol that splits yield sources into Senior and Junior tranches, giving Senior depositors smart-contract-enforced downside coverage and Junior depositors higher yield for taking first-loss exposure.",
+  "theme": "luma",
+  "primaryColor": "#7C3AED",
+  "lightColor": "#EDE9FE",
+  "darkColor": "#4C1D95",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": [
+              "introduction",
+              "how-dawn-works",
+              "vault-products"
+            ]
+          },
+          {
+            "group": "Protocol Mechanics",
+            "pages": [
+              "mechanics/yield-distribution",
+              "mechanics/coverage-and-utilization",
+              "mechanics/observation-period",
+              "mechanics/protected-exit"
+            ]
+          },
+          {
+            "group": "Using Royco Dawn",
+            "pages": [
+              "using/deposits-and-withdrawals",
+              "using/royco-entry-point",
+              "using/governance-and-fees"
+            ]
+          },
+          {
+            "group": "Risk & Security",
+            "pages": [
+              "security/risk-framework",
+              "security/audits",
+              "security/key-addresses"
+            ]
+          },
+          {
+            "group": "Reference",
+            "pages": [
+              "reference/faq"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "keyFeatures": [
+    "Risk tranching: splits yield sources into Senior (protected) and Junior (first-loss, higher yield) tranches",
+    "Adaptive Yield Distribution Model (YDM) that auto-adjusts yield split based on utilization",
+    "Smart-contract-enforced coverage minimums with per-market calibration",
+    "Observation Period to distinguish temporary drawdowns from real losses",
+    "Protected Exit mechanism allowing Seniors to exit when coverage is breached",
+    "Managed vaults (srRoyUSDC and roywstETH) curated by Dialectic",
+    "Multi-chain deployment on Ethereum and Avalanche",
+    "ERC-4626 compliant vault tokens"
+  ],
+  "publicApiSurface": [
+    "Senior Royco USDC vault (srRoyUSDC) — ERC-4626 token, USDC deposit",
+    "Royco ETH vault (roywstETH) — ERC-4626 token, wstETH deposit",
+    "Dawn Market Factory — 0xD567cCbb336Eb71eC2537057E2bCF6DB840bB71d",
+    "Yield Distribution Model contract — 0x071B0FA065774b403B8dae0aE93A09Df5DE3DFAc",
+    "RoycoEntryPoint — 0x63da1229be88fb4d20210147954a1a3e05f2581b",
+    "Senior tranche deposit/redeem via RoycoEntryPoint",
+    "Junior tranche deposit/redeem via RoycoEntryPoint",
+    "Vault withdrawal epoch (30-day cycle)"
+  ]
+}

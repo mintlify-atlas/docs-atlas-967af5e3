@@ -1,72 +1,69 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
-  "name": "Mintlify Starter Kit",
+  "name": "Royco Dawn",
+  "theme": "luma",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
-  },
-  "favicon": "/favicon.svg",
-  "navigation": {
-    "pages": [
-      {
-        "group": "Getting Started",
-        "pages": [
-          "index",
-          "quickstart"
-        ]
-      }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
-        }
-      ]
-    }
-  },
-  "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "primary": "#7C3AED",
+    "light": "#EDE9FE",
+    "dark": "#4C1D95"
   },
   "navbar": {
-    "links": [
-      {
-        "label": "Support",
-        "href": "mailto:hi@mintlify.com"
-      }
-    ],
     "primary": {
-      "type": "button",
-      "label": "Dashboard",
-      "href": "https://app.mintlify.com"
+      "type": "github",
+      "href": "https://github.com/2NNatural/tempdocs"
     }
-  },
-  "contextual": {
-    "options": [
-      "copy",
-      "view",
-      "chatgpt",
-      "claude",
-      "perplexity",
-      "mcp",
-      "cursor",
-      "vscode"
-    ]
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+      "github": "https://github.com/2NNatural/tempdocs"
     }
+  },
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": [
+              "introduction",
+              "how-dawn-works",
+              "vault-products"
+            ]
+          },
+          {
+            "group": "Protocol Mechanics",
+            "pages": [
+              "mechanics/yield-distribution",
+              "mechanics/coverage-and-utilization",
+              "mechanics/observation-period",
+              "mechanics/protected-exit"
+            ]
+          },
+          {
+            "group": "Using Royco Dawn",
+            "pages": [
+              "using/deposits-and-withdrawals",
+              "using/royco-entry-point",
+              "using/governance-and-fees"
+            ]
+          },
+          {
+            "group": "Risk & Security",
+            "pages": [
+              "security/risk-framework",
+              "security/audits",
+              "security/key-addresses"
+            ]
+          },
+          {
+            "group": "Reference",
+            "pages": [
+              "reference/faq"
+            ]
+          }
+        ]
+      }
+    ]
   }
 }

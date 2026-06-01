@@ -1,0 +1,62 @@
+---
+title: "Observation Period: Protecting Junior from Temporary Drawdowns"
+sidebarTitle: "Observation Period"
+description: "The Observation Period lets Royco Dawn distinguish temporary drawdowns from real losses before finalizing any loss against Junior capital."
+---
+
+Yield sources sometimes experience short-term drawdowns that have nothing to do with permanent loss — temporary dislocations, oracle lag, or brief liquidity events that reverse within hours or days. Finalizing a loss against Junior capital during a transient dip would be premature and unfair to depositors. The **Observation Period** is the mechanism Dawn uses to wait, watch, and distinguish genuine losses from noise before any permanent allocation is made.
+
+## How It Triggers
+
+When the protocol detects a drawdown in the underlying yield source, it does not immediately finalize a loss. Instead, it enters the **Observation Period** — a supervised window during which the market holds its position and gives the underlying strategy time to recover.
+
+## What Happens During the Period
+
+The Observation Period simultaneously protects Senior depositors, incentivizes Junior depositors to stay, and allows conditions to stabilize.
+
+<Steps>
+  <Step title="Senior Withdrawals Paused">
+    Withdrawals for Senior depositors are suspended for the duration of the Observation Period. This prevents a run on the pool while the outcome of the drawdown is still uncertain.
+  </Step>
+  <Step title="New Junior Deposits Blocked">
+    Fresh Junior capital cannot enter the market during the window. This ensures any recovery is driven by existing positions, not by new capital masking the drawdown.
+  </Step>
+  <Step title="Yield Redirected to Junior">
+    100% of yield generated during the Observation Period is redirected to Junior depositors. This accelerates the rebuild of the first-loss buffer and compensates Junior for bearing the risk during the uncertain window.
+  </Step>
+  <Step title="Protocol Observes the Defined Window">
+    The protocol monitors the underlying strategy for the market's configured time window, waiting to see whether the drawdown resolves or persists.
+  </Step>
+</Steps>
+
+## Outcomes
+
+Once the Observation Period is underway, one of three outcomes resolves it:
+
+<AccordionGroup>
+  <Accordion title="Recovery — no loss realized">
+    If the underlying strategy recovers within the observation window, the drawdown is treated as transient. No loss is allocated against Junior capital. The Observation Period ends, normal operations resume, and Senior withdrawals are re-enabled.
+  </Accordion>
+  <Accordion title="Drawdown persists — genuine loss finalized">
+    If the drawdown is still present when the observation window expires, the protocol treats it as a real and sustained loss. The loss is permanently allocated against Junior capital. Senior depositors remain protected up to the extent of the remaining Junior buffer.
+  </Accordion>
+  <Accordion title="Protected Exit Threshold breached — Observation Period terminates early">
+    If the drawdown worsens and reaches the market's **Protected Exit Threshold** before the observation window expires, the Observation Period terminates immediately. Junior losses are finalized at that point, and Senior depositors gain the option to withdraw. See [Protected Exit](/mechanics/protected-exit) for full details.
+  </Accordion>
+</AccordionGroup>
+
+## Window Configuration
+
+The length of the Observation Period window is **set per market** at creation. Different markets carry different windows reflecting the nature of their underlying yield source and expected recovery dynamics:
+
+| Window | Behavior |
+|--------|----------|
+| 7-day | Protocol waits up to 7 days before finalizing any loss |
+| 30-day | Protocol waits up to 30 days before finalizing any loss |
+| 0-day | No waiting — losses are finalized immediately upon detection |
+
+The specific window for each market is displayed on its market page in the protocol interface.
+
+<Warning>
+  Markets with a **0-day observation window** have no waiting period. If a drawdown is detected, losses are finalized against Junior capital immediately — there is no grace period for recovery. Review the market's window configuration before depositing.
+</Warning>

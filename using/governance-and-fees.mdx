@@ -1,0 +1,77 @@
+---
+title: "Governance, Roles, and Fees in Royco Dawn"
+sidebarTitle: "Governance & Fees"
+description: "How Royco Dawn's three-role governance structure works — Foundation, Curator, and Depositor — and a full breakdown of the protocol's fee structure."
+---
+
+Royco Dawn separates protocol governance from investment decision-making through a three-role structure: the Royco Foundation, the Curator, and the Depositor. This separation ensures that the party responsible for smart contract infrastructure and protocol rules is distinct from the party making active capital allocation decisions — and that depositors retain clear visibility into who controls what. Critical changes to the protocol are time-locked, giving participants advance notice before they take effect.
+
+## Roles
+
+### Royco Foundation
+
+The Royco Foundation is responsible for the protocol's governance and infrastructure. Its remit covers:
+
+- Deploying and upgrading smart contracts.
+- Configuring tranching parameters across markets.
+- Making yield sources available based on published criteria including audit status, time since deployment, minimum size, and risk scoring.
+- Setting the permissions framework that governs curator access.
+
+<Note>
+  Critical protocol changes — including smart contract upgrades, authorization structure changes, or parameter changes that affect user positions — are subject to a **timelock**. This gives depositors advance notice before any such change takes effect.
+</Note>
+
+The Foundation does **not** make opinionated or investment decisions about capital allocation within vaults. That responsibility belongs exclusively to the Curator.
+
+### The Curator
+
+The Curator makes all investment decisions for a given vault:
+
+- Which yield sources to allocate capital to.
+- Coverage levels and position sizes.
+- Collateral management.
+- Withdrawal processing.
+
+The Curator operates on the vault's multisig with scoped permissions. Within those permissions, it can allocate and rebalance between approved markets, update NAVs, manage collateral positions, and whitelist depositors. It cannot move funds to unauthorized addresses or alter protocol mechanics. The Royco Foundation retains the ability to revoke curator access at any time.
+
+### Depositor / User
+
+Depositors select which vault or tranche to enter based on their own objectives and risk tolerance. The protocol does not prescribe allocation decisions for depositors.
+
+Identity verification (KYC/KYB) is required before withdrawing from vaults. U.S. persons are not eligible to participate.
+
+## Permission Architecture
+
+Vault assets are held in a Concrete Vault. The Curator's operational permissions are scoped per vault and per operation: it can rebalance between approved markets, update NAVs, manage collateral positions, and whitelist depositors — but it cannot route funds to addresses outside the approved whitelist.
+
+The Royco Foundation Multisig sits above this structure. It sets the permissions framework and manages protocol-level configurations. Critical changes (as defined above) are subject to the timelock, providing depositors with advance notice before any material protocol change is enacted.
+
+## Fee Structure
+
+Fees across all current Royco Dawn products are collected programmatically through an onchain fee mechanism. The current fee schedule is:
+
+| Product         | Management Fee | Performance Fee | Fee on Yield Share (Risk Premium) |
+|-----------------|----------------|-----------------|-----------------------------------|
+| srRoyUSDC       | 0%             | 0%              | 0%                                |
+| roywstETH       | 0%             | 0%              | 0%                                |
+| Junior tranches | 0%             | 0%              | 0%                                |
+| Senior tranches | 0%             | 0%              | 0%                                |
+
+For swaps, LiFi route fees apply at **3 bps for stablecoins** and **20 bps for non-stablecoin assets**.
+
+<Info>
+  Where applicable, performance fees are calculated on yield generated — defined as all income received by a vault minus borrowing costs. No fee is charged in periods where yield is zero or negative. All fees are visible onchain. Prior versions of the protocol included a junior tranche fee that does not apply to the current version.
+</Info>
+
+## Yield Share Fees Explained
+
+Royco Dawn's tranching mechanism transfers a portion of yield from Senior to Junior as a **Risk Premium**, compensating Junior depositors for taking first-loss exposure. The **Yield Share Fee** applies specifically to that transfer stage: a portion of the Risk Premium flowing from Senior to Junior is captured as a fee, and the remainder reaches Junior.
+
+This is structurally different from a **Junior Performance Fee**, which would tax Junior's total yield — both Junior's share of the underlying strategy and the Risk Premium received on top of it. The distinction matters in practice:
+
+- A **Junior Performance Fee** creates a specific problem in certain normal market conditions. Because the fee is applied to Junior's total position, Junior can end up earning less than the underlying strategy's base rate even when no drawdown event has occurred.
+- The **Yield Share Fee** avoids this outcome entirely. Because the fee is only applied to the Risk Premium transfer — not to Junior's full position — Junior's underlying earnings are never directly penalized by the fee mechanism.
+
+For example: if Junior's underlying position starts at 15 units but a Junior Performance Fee architecture results in Junior netting only 14.40 units, no drawdown occurred — the shortfall relative to the base rate is purely a product of the fee structure. The Yield Share Fee is designed so this state cannot arise.
+
+Note that the Yield Share Fee is not taken during Observation Periods. During an Observation Period, 100% of yield is already redirecting to Junior in order to rebuild the coverage buffer, so no fee is applied to that transfer.

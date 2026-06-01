@@ -1,0 +1,128 @@
+---
+title: "Vault Products: srRoyUSDC and roywstETH"
+sidebarTitle: "Vault Products"
+description: "Royco Dawn offers two managed vaults — srRoyUSDC for Senior tranche USDC yield and roywstETH for ETH holders — both curated by Dialectic."
+---
+
+For participants who prefer not to evaluate and manage individual Dawn markets directly, Royco offers two professionally managed vault products. Both vaults are curated by Dialectic, an independent external manager, and handle all allocation decisions, collateral management, and rebalancing on behalf of depositors. The vaults are built on Dawn's tranching infrastructure, meaning depositors retain the non-custodial guarantees and smart-contract-enforced risk mechanics of the underlying protocol.
+
+<CardGroup cols={2}>
+  <Card
+    title="Senior Royco USDC (srRoyUSDC)"
+    icon="circle-dollar-to-slot"
+    href="#senior-royco-usdc-srRoyUSDC"
+  >
+    Deposit USDC into a diversified Senior tranche vault managed by Dialectic. Receive a yield-bearing ERC-4626 token.
+  </Card>
+  <Card
+    title="Royco ETH (roywstETH)"
+    icon="ethereum"
+    href="#royco-eth-roywsteth"
+  >
+    Deposit wstETH and earn staking rewards plus carry spread — without selling your ETH.
+  </Card>
+</CardGroup>
+
+## About Dialectic
+
+Dialectic is a Swiss crypto-native investment firm founded in 2019. The firm specializes in systematic, market-neutral DeFi yield strategies, powered by proprietary on-chain automation and risk-management tooling built by its in-house research arm, Atelier. As the curator for both Royco Dawn vaults, Dialectic is responsible for all investment decisions: which yield sources to allocate to, coverage levels, position sizes, collateral management, and withdrawal processing.
+
+The Royco Foundation retains the ability to revoke curator access at any time. The curator operates on each vault's multisig with scoped permissions — it can allocate and rebalance within approved parameters, but cannot move funds to unauthorized addresses or alter protocol mechanics.
+
+## Senior Royco USDC (srRoyUSDC)
+
+srRoyUSDC is Royco Dawn's Senior Vault token. Users deposit USDC and receive a yield-bearing **ERC-4626** token representing their share of the vault.
+
+Dawn splits every yield opportunity into two tranches: Junior capital absorbs losses first (up to the coverage amount) before Senior is affected, while Senior earns yield on the remaining share. **srRoyUSDC deposits are allocated exclusively to Senior tranches.** Dialectic manages the vault, selecting which Senior tranches to allocate to and rebalancing based on real-time coverage and risk signals.
+
+This vault is the foundational Royco Dawn product — offering diversified, buffered yield backed by Junior first-loss capital across a curated set of yield sources.
+
+## Royco ETH (roywstETH)
+
+roywstETH is Royco Dawn's Carry Vault, designed for ETH holders who want to earn yield without selling their wstETH.
+
+The vault works in three steps:
+
+<Steps>
+  <Step title="Deposit wstETH as collateral">
+    Users deposit wstETH into the vault. Dialectic posts this collateral to a lending venue.
+  </Step>
+  <Step title="Borrow USDC against collateral">
+    The vault borrows USDC against the wstETH collateral position.
+  </Step>
+  <Step title="Deploy into srRoyUSDC">
+    The borrowed USDC is deployed into srRoyUSDC to earn Senior tranche yield.
+  </Step>
+</Steps>
+
+Returns come from two sources: the **underlying stETH staking reward** plus the **spread between the Senior tranche yield and the USDC borrow cost**. Dialectic manages the vault, handling collateral management, borrowing, and rebalancing across market conditions.
+
+<Warning>
+  Carry vault depositors are exposed to **collateral liquidation risk**. If the ETH price declines significantly relative to the outstanding USDC borrow position, the collateral may be liquidated. Vault performance is variable and depends on underlying market conditions, borrow costs, and yield source performance. All depositors should review the Risk Framework before participating.
+</Warning>
+
+## Portfolio Strategy
+
+Dialectic has built a robust framework for how it manages the following parameters across both vaults:
+
+1. **Concentration limits** — maximum allocation to any single market or yield source.
+2. **Rebalancing expectations** — how and when positions are adjusted in response to changing risk and yield signals.
+3. **Market evaluation criteria** — the criteria Dialectic uses to assess new yield sources before allocating capital.
+
+The full Dialectic DD Framework is available at [notion.so/dialectic/Dialectic\_DD\_Framework](https://notion.so/dialectic/Dialectic_DD_Framework).
+
+Dialectic has also published an overview of all key risks for Royco vault depositors at [notion.so/dialectic/Royco-Vault-Risk-Overview](https://notion.so/dialectic/Royco-Vault-Risk-Overview).
+
+<Note>
+  New strategy allocations are subject to a **notice period**. When Dialectic queues a new strategy, it is displayed in the app and remains visible for a minimum of **7 days** before capital may be allocated to it.
+</Note>
+
+## Withdrawals & Liquidity
+
+### Processing Time
+
+It may take **up to 30 days** for a withdrawal to process. Each vault requires users to submit a redemption request. Dialectic then processes the liquidity for the redemption, after which users must claim their assets once the liquidity window opens.
+
+Users may be able to sell vault positions via decentralized protocols such as **LiFi, Curve, Balancer, and Uniswap**, bypassing the native withdrawal processing period.
+
+### Withdrawal Priority Order
+
+The vault processes withdrawals in the following priority sequence:
+
+1. **Royco's own vaults** (i.e., roywstETH and sroywstETH)
+2. **Priority Partners**
+3. **Remaining withdrawals**
+
+<Note>
+  Senior depositors have first right to withdraw liquidity relative to Junior. The minimum coverage buffer is always smart-contract-enforced, so Seniors always know the floor backing their position.
+</Note>
+
+## Fees
+
+Vault-level fees are collected programmatically through an on-chain fee mechanism. All current fees are as follows:
+
+| Product | Management Fee | Performance Fee | Fee on Yield Share (Risk Premium) |
+|---|---|---|---|
+| srRoyUSDC | 0% | 0% | 0% |
+| roywstETH | 0% | 0% | 0% |
+| Junior tranches | 0% | 0% | 0% |
+| Senior tranches | 0% | 0% | 0% |
+
+For swaps, LiFi route fees apply at a rate of **3 bps for stablecoins** and **20 bps for assets not classified as stablecoins**.
+
+<Note>
+  Where applicable, performance fees are calculated on yield generated, defined as all income received by a vault minus borrowing costs. No fee is charged in periods where the yield is zero or negative. Fees are visible on-chain.
+</Note>
+
+## Flow of Funds
+
+Funds are managed through both **Makina** and **Concrete** to preserve self-custody. Depositors can review each custodian's infrastructure and security documentation directly:
+
+- [docs.makina.finance](https://docs.makina.finance)
+- [docs.concrete.xyz](https://docs.concrete.xyz)
+
+---
+
+<Note>
+  This documentation is provided for informational purposes only and does not constitute investment advice, a solicitation, or an offer to sell any securities or financial instruments. Participation in Royco Dawn products involves risk, including the potential loss of all capital deployed. There is no guarantee of returns, and depositors may lose some or all of their capital. Prospective participants should conduct their own independent due diligence and consult with qualified legal, financial, and tax advisors before making any investment decisions. By participating, depositors acknowledge that they have reviewed the Risk Framework and the Terms of Service.
+</Note>

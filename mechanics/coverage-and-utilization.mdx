@@ -1,0 +1,70 @@
+---
+title: "Coverage and Utilization in Royco Dawn Markets"
+sidebarTitle: "Coverage & Utilization"
+description: "Understand how coverage ratios and utilization work in Royco Dawn — the smart-contract-enforced floor that protects Senior depositors and drives Junior yield."
+---
+
+Every Royco Dawn market revolves around two related but distinct numbers: **coverage** and **utilization**. Coverage tells you how much loss Junior can absorb before Senior is affected. Utilization tells you how efficiently that coverage capacity is currently being used. Together they define the health of a market, determine whether new deposits are accepted, and drive the yield premium that Junior depositors earn.
+
+## Coverage
+
+Coverage is the percentage of the total pool that Junior capital represents. Because Junior absorbs losses first, coverage directly equals the maximum drawdown the underlying yield source can experience before Senior depositors are touched.
+
+**Example:** A market with $2,000,000 in Junior capital and $10,000,000 in total deposits has 20% coverage. The underlying strategy can lose up to 20% of the total pool value before a single dollar of Senior capital is at risk.
+
+| Pool Component | Amount | Coverage |
+|----------------|--------|----------|
+| Senior deposits | $8,000,000 | — |
+| Junior deposits | $2,000,000 | — |
+| **Total pool** | **$10,000,000** | **20%** |
+
+Both tranches are deployed into the same underlying strategy, so Junior is not sitting in a separate reserve — it is co-invested alongside Senior and earning the base yield from the same source.
+
+## Minimum Coverage Requirement
+
+Each Dawn market enforces a **hard minimum coverage requirement** set at market creation. If Junior capital falls below this floor, two actions are triggered automatically by the smart contract:
+
+- **New Senior deposits are paused.**
+- **Junior withdrawals are paused.**
+
+Both remain paused until enough Junior capital is returned to meet the minimum again. Senior depositors always know the exact floor protecting their position because it is enforced in code, not by policy.
+
+**Coverage minimums are calibrated per market.** The minimum for a given market reflects factors including the risk profile and historical volatility of the underlying yield source, the asset class (lending, staking, tokenized RWA), the liquidity depth of the strategy, and the overall track record of the protocol. A lending market backed by a blue-chip protocol may carry a lower minimum than a newer yield source with a shorter history. This per-market calibration ensures the floor reflects the actual risk characteristics of the underlying rather than a one-size-fits-all threshold.
+
+## Utilization
+
+Utilization measures **how close Junior is to the coverage floor**. It expresses the fraction of the journey from "maximum excess capital above the floor" to "exactly at the floor."
+
+- **Low utilization (e.g., 40%):** Junior holds far more than the required minimum. There is plenty of cushion and the market can absorb significant new Senior deposits without approaching the floor.
+- **High utilization (e.g., 90%):** Junior is efficiently deployed. The market is near its operating target, and Junior depositors earn a meaningful premium.
+- **100% utilization:** Junior is exactly at the required minimum.
+
+<Note>
+  At 100% utilization, both new Senior deposits and Junior withdrawals are blocked by the smart contract until Junior capital is replenished above the floor. The protocol enters this state automatically with no manual intervention required.
+</Note>
+
+## The 90% Target
+
+The Yield Distribution Model targets **90% utilization** as the market's equilibrium operating point. This target serves both sides of the market:
+
+- **For Seniors:** a 10% buffer remains between Junior's current level and the coverage floor, providing a meaningful cushion even in high-utilization conditions.
+- **For Juniors:** utilization is high enough that the risk premium is substantial, making the market economically attractive for new and existing Junior depositors.
+
+The yield curve is deliberately designed so that Junior yield escalates sharply above 90%, pulling in new capital before the lockout threshold at 100% is reached.
+
+## How They Interact
+
+Coverage and utilization work together to describe the full state of a market's risk capacity:
+
+- **Coverage** describes the size of the first-loss buffer relative to the pool — a fixed snapshot of maximum protection.
+- **Utilization** describes how much of that buffer's headroom has been consumed relative to the minimum floor — a dynamic measure of current efficiency.
+
+**Putting both together with the 20% coverage example:**
+
+| Scenario | Junior Balance | Coverage | Utilization | Meaning |
+|----------|---------------|----------|-------------|---------|
+| Excess capital | Well above minimum | 20%+ | ~40% | Pool is over-collateralized; premium is lower |
+| Target | At 90% of floor distance | ~20% | 90% | Efficient deployment; meaningful Junior premium |
+| Floor reached | Exactly at minimum | 20% | 100% | Lockout active; deposits and withdrawals blocked |
+
+A drawdown of X% applies to the full pool. Junior absorbs those losses first. Only after Junior is exhausted does Senior face direct exposure.

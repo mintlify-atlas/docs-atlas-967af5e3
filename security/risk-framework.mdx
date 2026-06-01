@@ -1,0 +1,85 @@
+---
+title: "Risk Framework: Understanding Royco Dawn Risks"
+sidebarTitle: "Risk Framework"
+description: "A comprehensive overview of Royco Dawn's risk categories: market-level risks for tranche depositors, vault-level risks, and operational risks across the protocol."
+---
+
+Understanding the risks involved in any DeFi protocol is essential before committing capital. Royco Dawn's risk-tranching architecture introduces both protections and unique risk dynamics that differ significantly from participating in a single-tranche yield product. This page describes the primary risk categories organized by where they apply: risks inherent to Dawn markets (affecting both Senior and Junior tranche depositors directly), risks specific to vaults that aggregate across markets, and operational risks that span the protocol as a whole.
+
+## Market-Level Risks (Senior and Junior Tranches)
+
+Dawn markets expose depositors to a set of risks that are common to all participants, regardless of tranche. The sections below break down each risk type, who bears it, and what mitigants the protocol applies.
+
+<Accordion title="Smart Contract Risk">
+  All protocol functionality is executed by smart contracts. A bug or exploit in the underlying code could result in the partial or total loss of deposited capital for participants in any tranche.
+
+  **Mitigants:**
+  - Multiple independent audits of the core vault infrastructure (Concrete Earn v2) and the core tranche infrastructure
+  - Active **$250,000 bug bounty** on Immunefi
+  - Real-time onchain monitoring via **Hypernative**
+
+  See the [Security & Audits](/security/audits) page for full details on audit scope and the bug bounty program.
+</Accordion>
+
+<Accordion title="Underlying Strategy Risk">
+  Each Dawn market depends on its underlying yield source. If a lending market accrues bad debt, a staking protocol suffers slashing, or an RWA fund defaults, the market is directly affected and depositor capital may be at risk.
+
+  **Mitigants:**
+  - Junior capital absorbs losses first, up to the coverage percentage, shielding Senior depositors
+  - The Foundation applies onboarding criteria — including audit status, track record, and minimum size — before making a yield source available to curators
+  - The curator conducts independent due diligence before allocating to any underlying source
+</Accordion>
+
+<Accordion title="Senior-Specific: Loss Exposure After Junior Exhaustion">
+  Senior is backed by Junior's first-loss buffer, but this protection is not unlimited. If losses exceed Junior's balance, Senior depositors are exposed to the remainder. The coverage requirement sets the smart-contract-enforced minimum buffer, but it is **not a guarantee against all losses**.
+
+  If the market's **Protected Exit Threshold** is reached, Senior can withdraw immediately with the underlying asset and liquidate it to prevent further losses during a gradual drawdown. Junior may still have remaining capital at this point, providing a buffer for Seniors who choose to remain in the market.
+</Accordion>
+
+<Accordion title="Junior-Specific: First-Loss and Liquidity Constraints">
+  Junior depositors absorb all losses from the first dollar. Because both tranches are co-invested with beta equal to one, losses are amplified by the coverage ratio.
+
+  <Warning>
+    **Leverage amplification:** At 20% coverage, Junior is effectively **5x levered on the downside**. A 2% drawdown on the underlying strategy translates directly to a **10% loss on Junior's capital**. Prospective Junior depositors should carefully assess their risk tolerance before participating.
+  </Warning>
+
+  Junior losses can be finalized in two ways: if the Observation Period window expires without recovery, or if the drawdown reaches the market's Protected Exit Threshold and Senior withdraws. Once finalized, Junior loses recovery optionality but may still retain remaining capital.
+
+  **Liquidity constraints:**
+  - Junior withdrawals are restricted by the coverage requirement. If Junior's capital is fully committed to backing Senior, withdrawals are blocked until utilization decreases.
+  - Junior deposits into illiquid underlying sources — for example, RWA positions with 30-day redemption windows — inherit that same illiquidity and cannot be redeemed faster than the underlying allows.
+</Accordion>
+
+## Vault-Level Risks (srRoyUSDC, roywstETH)
+
+In addition to market-level risks, vault depositors are exposed to risks arising from how the vault curator allocates across multiple Dawn markets. The mix of markets, coverage ratios, and underlying strategies chosen by the curator all affect the vault's aggregate risk profile.
+
+<Note>
+  Dialectic, the vault curator, has published a detailed breakdown of the risks associated with each vault at [notion.so/dialectic/Royco-Vault-Risk-Overview](https://www.notion.so/dialectic/Royco-Vault-Risk-Overview). Prospective vault depositors are encouraged to review this resource as part of their due diligence.
+</Note>
+
+## Operational Risks
+
+Beyond the mechanics of the tranching system itself, Royco Dawn carries operational risks that apply across the protocol.
+
+<Accordion title="Curator Risk">
+  The curator holds operational control over vault positions and bears responsibility for allocation decisions. Poor allocation choices or a slow response to emerging risk events could result in losses for depositors.
+
+  **Mitigants:**
+  - The curator is contractually bound to a standard of care
+  - Curator permissions are scoped — only explicitly authorized actions can be performed
+  - The Foundation can revoke curator access and transition vault management to a successor if necessary
+</Accordion>
+
+<Accordion title="Oracle and Pricing Risk">
+  The protocol relies on external price feeds to value positions and determine collateral and coverage ratios. Oracle manipulation or a price feed failure could lead to incorrect valuations and mispriced risk.
+
+  **Mitigants:**
+  - Established oracle providers — **Chainlink** and **RedStone** — are used for liquid assets
+  - For tokenized RWAs, admin-controlled configurations source prices from Net Asset Value (NAV) rather than thin secondary markets, reducing the risk of manipulation via illiquid on-chain trading pairs
+  - Vault-level pricing is reviewed daily through the NAV update process
+</Accordion>
+
+---
+
+_This document is provided for informational purposes only and does not constitute investment advice, a solicitation, or an offer to sell any securities or financial instruments. Participation in Royco Dawn products involves risk, including the potential loss of all capital deployed. Prospective participants should conduct their own independent due diligence and consult with qualified legal, financial, and tax advisors before making any investment decisions._

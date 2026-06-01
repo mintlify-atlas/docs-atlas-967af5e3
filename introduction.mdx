@@ -1,0 +1,81 @@
+---
+title: "Royco Dawn: Non-Custodial DeFi Risk Tranching"
+sidebarTitle: "Introduction"
+description: "Royco Dawn is a non-custodial protocol that splits yield sources into Senior and Junior tranches, enabling structured DeFi yield with smart-contract-enforced downside coverage."
+---
+
+Royco Dawn is a non-custodial risk-tranching protocol designed for DeFi participants who want clearly defined exposure to yield sources — whether lending markets, staking deposits, or tokenized real-world assets. Rather than every depositor absorbing the same undifferentiated risk, Dawn splits each yield source into two tranches: one offering smart-contract-enforced downside coverage, and one offering higher yield in exchange for taking the first-loss position. The result is a capital-efficient, permissionless structure where Senior and Junior depositors can each find the risk-return profile that suits them — without any custodian holding their funds.
+
+## The Two Tranches
+
+Royco Dawn splits every yield source into a **Senior** tranche and a **Junior** tranche. Both sides are co-invested into the same underlying strategy; the difference lies in how returns and losses flow back to each group.
+
+**Senior** depositors earn yield with smart-contract-enforced downside coverage. A defined cushion of Junior capital absorbs any losses before Senior capital is ever touched. This makes the Senior position attractive for risk committees and conservative allocators who need a concrete, verifiable loss-absorption layer before accessing a given yield source.
+
+**Junior** depositors earn a higher yield by serving as first-loss capital. They receive a risk premium paid by Senior in exchange for formally absorbing the first dollar of any drawdown. Because Junior is co-invested alongside Senior — not sitting in a separate reserve — this structure is capital-efficient, and the premium Juniors earn reflects risk they are already underwriting by participating in the underlying strategy.
+
+<Info>
+  Junior capital absorbs losses from the very first dollar of any drawdown, up to the full coverage amount. Senior capital is not affected until Junior is fully exhausted.
+</Info>
+
+## The Yield Distribution Model
+
+Yield distribution between tranches works on a supply-and-demand basis, similar in concept to how lending markets like Morpho or Aave use utilization to set interest rates. In Dawn, **utilization measures how much of Junior's coverage capacity is currently being used to back the market.** When Junior capital is scarce relative to the required coverage floor, more yield flows to Junior to attract new first-loss capital. When Junior is abundant, more yield flows to Senior.
+
+The protocol targets **90% utilization** as the equilibrium point. At 100% utilization, Junior is exactly at the required coverage minimum and the market stops accepting new Senior deposits. Above 90%, the yield curve steepens aggressively to incentivize new Junior capital to enter. Below 90%, the curve is essentially flat, since Junior capital in excess of the floor already dilutes the per-depositor premium.
+
+The yield curve — defined by three points (Y0 at 0% utilization, YT at 90%, and Y100 at 100%) — also adapts over time. When utilization consistently runs above target, the curve shifts upward, increasing Junior's premium and attracting more capital. When utilization consistently sits below target, the curve shifts down. These shifts happen gradually over days or weeks, creating a self-balancing system with no manual governance intervention required.
+
+<Note>
+  APY figures shown in the Dawn interface are trailing 24-hour annualized rates based on actual yield accrued. A 7-day average is shown alongside for a smoother view. Both are backward-looking; future yields will vary as utilization and pool composition change.
+</Note>
+
+## Vault Products
+
+For participants who prefer not to evaluate and manage individual Dawn markets, Royco offers two managed vaults — both curated by Dialectic, a Swiss crypto-native investment firm specializing in systematic, market-neutral DeFi yield strategies.
+
+| Vault | Deposit Asset | What It Does |
+|---|---|---|
+| **Senior Royco USDC (srRoyUSDC)** | USDC | Allocates across multiple Senior tranches for diversified, Senior-tranche yield. |
+| **Royco ETH (roywstETH)** | wstETH | Borrows USDC against wstETH collateral and deploys into srRoyUSDC, earning staking rewards plus the carry spread. |
+
+**srRoyUSDC** is the foundational product, deploying USDC across a curated set of Senior tranches. **roywstETH** is designed for ETH holders who want to earn yield without selling their ETH — it captures both staking rewards and the carry spread between the Senior tranche yield and the USDC borrow cost.
+
+## Explore Royco Dawn
+
+<CardGroup cols={2}>
+  <Card
+    title="How Dawn Works"
+    icon="gears"
+    href="/how-dawn-works"
+  >
+    Deep dive into the tranching mechanism, coverage ratios, loss scenarios, and the Yield Distribution Model.
+  </Card>
+  <Card
+    title="Vault Products"
+    icon="vault"
+    href="/vault-products"
+  >
+    Learn about srRoyUSDC and roywstETH — Royco's managed vaults curated by Dialectic.
+  </Card>
+  <Card
+    title="Yield Distribution"
+    icon="chart-line"
+    href="/mechanics/yield-distribution"
+  >
+    Understand how the utilization curve, yield curve points, and self-adapting model split returns between tranches.
+  </Card>
+  <Card
+    title="Deposits & Withdrawals"
+    icon="arrow-right-arrow-left"
+    href="/using/deposits-and-withdrawals"
+  >
+    Step-by-step guidance for depositing into and withdrawing from Dawn markets and vaults.
+  </Card>
+</CardGroup>
+
+---
+
+<Note>
+  This documentation is provided for informational purposes only and does not constitute investment advice, a solicitation, or an offer to sell any securities or financial instruments. Participation in Royco Dawn products involves risk, including the potential loss of all capital deployed. Prospective participants should conduct their own independent due diligence and consult with qualified legal, financial, and tax advisors before making any investment decisions.
+</Note>

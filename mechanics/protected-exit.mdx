@@ -1,0 +1,61 @@
+---
+title: "Protected Exit and Protected Exit Bonus"
+sidebarTitle: "Protected Exit"
+description: "The Protected Exit Threshold gives Senior depositors a first-loss coverage guarantee and an optional exit path when drawdowns exceed a defined level."
+---
+
+Not every drawdown resolves during the Observation Period. When losses deepen enough to breach a market's **Protected Exit Threshold**, Royco Dawn gives Senior depositors a clearly defined exit path — the ability to withdraw the underlying asset while a predefined level of Junior coverage still remains. Protected Exit is the final layer of Senior protection in the Dawn risk architecture, ensuring Seniors always have a governed, transparent way to act when conditions deteriorate beyond a defined point.
+
+## Protected Exit Threshold
+
+Each market sets a **Protected Exit Threshold** at creation. If a drawdown reaches this level:
+
+1. The [Observation Period](/mechanics/observation-period) is terminated immediately — no waiting for the window to expire.
+2. Losses against Junior capital are finalized at that point.
+3. Senior depositors gain the option to withdraw the underlying asset, with the remaining predefined level of Junior coverage still intact.
+
+Seniors who believe the remaining Junior buffer is adequate may choose to **stay in the market**. The Protected Exit Threshold grants the option to exit, not a requirement to do so. Seniors who remain after the threshold is breached continue to hold their position, now backed by the reduced Junior buffer.
+
+<Info>
+  The Protected Exit Threshold triggers an early termination of the Observation Period. The two mechanisms are linked: a breach of the threshold ends the Observation Period regardless of how much time remains in the window, and finalizes losses immediately.
+</Info>
+
+## Loss Finalization
+
+When Seniors exit following a Protected Exit event, losses are realized against Junior capital. The sequence is:
+
+- Junior absorbs the realized loss, reducing its balance.
+- Seniors who exit receive the underlying asset based on their share of the Senior tranche after that loss.
+- If the drawdown is severe enough that losses **exhaust Junior capital entirely**, Senior depositors become directly exposed to further drawdown with no first-loss buffer remaining.
+
+Seniors who choose to stay after the threshold breach remain subject to this risk if conditions continue to deteriorate.
+
+## Protected Exit Bonus
+
+Some markets include an optional feature called the **Protected Exit Bonus**. When enabled and the Protected Exit Threshold has been exceeded, Senior depositors who choose to voluntarily withdraw receive a small additional bonus — up to the market-defined percentage — on top of their withdrawal.
+
+<Note>
+  The Protected Exit Bonus is optional. Not all markets enable it. Check the individual market page to see whether a bonus is configured and what the defined percentage is.
+</Note>
+
+The bonus serves as a minor incentive for Seniors to exit, which reduces the total pool size and helps restore the market to a healthy coverage ratio. The bonus amount is sourced directly from remaining Junior capital.
+
+**Seniors who choose to stay in the market after the threshold breach forgo the bonus entirely.** The bonus is only available to those who voluntarily withdraw.
+
+## Example
+
+A market is configured with:
+- **Protected Exit Threshold:** 90%
+- **Protected Exit Bonus:** 2%
+
+The underlying yield source drops 9%, breaching the 90% threshold. The Observation Period terminates immediately and losses are finalized against Junior capital. Senior depositors now have the option to exit.
+
+**Alice** is a Senior depositor with a $100,000 position. She chooses to exit.
+
+| Item | Amount |
+|------|--------|
+| Alice's Senior deposit | $100,000 |
+| Protected Exit Bonus (2%) | $2,000 |
+| **Total Alice receives** | **$102,000** |
+
+The $2,000 bonus is sourced from remaining Junior capital. Seniors who stay in the market receive no bonus and continue holding their position backed by the remaining Junior buffer.

@@ -1,0 +1,40 @@
+---
+title: "RoycoEntryPoint: The Protocol's Deposit Gateway"
+sidebarTitle: "RoycoEntryPoint"
+description: "All Royco Dawn tranche deposits route through the RoycoEntryPoint contract, which enforces fair ordering, fee routing, and protocol upgradeability."
+---
+
+The **RoycoEntryPoint** is Royco Dawn's tranche deposit gateway contract. Rather than depositing directly into individual tranche contracts, all deposits into Royco Dawn markets are routed through the RoycoEntryPoint. This single entry point is a deliberate architectural choice — it allows the protocol to enforce consistent rules across every deposit without embedding that logic redundantly inside each vault or tranche contract.
+
+## Key Functions
+
+The RoycoEntryPoint provides three protocol-level guarantees for every deposit that passes through it:
+
+### 1. Queued Execution
+
+Deposits are batched together and executed in processing cycles rather than being applied immediately and individually. This batching prevents front-running by eliminating the advantage of reordering transactions, and it ensures fair ordering among depositors within the same cycle. The per-market delay applied at this stage also functions as an MEV protection mechanism.
+
+### 2. Fee Routing
+
+Protocol-level execution fees are applied at the entry point before assets are forwarded to the destination vault. Centralizing fee logic here means fee parameters can be adjusted or extended at the protocol level without touching individual vault contracts.
+
+### 3. Upgradeability
+
+The entry point's logic can be updated by the Royco Foundation without requiring changes to the underlying vault or tranche contracts. This separation of concerns allows the protocol to iterate on deposit mechanics, fee structures, or ordering rules while leaving vault state intact.
+
+## Contract Addresses
+
+The RoycoEntryPoint is deployed at the same address on all supported networks:
+
+| Network  | Address                                      |
+|----------|----------------------------------------------|
+| Ethereum | `0x63da1229be88fb4d20210147954a1a3e05f2581b` |
+| Avalanche | `0x63da1229be88fb4d20210147954a1a3e05f2581b` |
+
+## Important: Always Use the Official App
+
+<Warning>
+  Always interact with Royco Dawn through the official app at [royco.org](https://royco.org), which routes all transactions through the RoycoEntryPoint automatically. **Direct vault deposits bypass access controls and are not supported.** Funds sent directly to vault contracts may not be credited correctly and could be lost.
+</Warning>
+
+The official app at [royco.org](https://royco.org) handles RoycoEntryPoint routing transparently — you do not need to construct entry point calls manually. Any integration or front-end that bypasses RoycoEntryPoint is unsupported and may produce incorrect or unrecoverable outcomes.

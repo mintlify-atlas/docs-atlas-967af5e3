@@ -1,0 +1,57 @@
+---
+title: "Deposits and Withdrawals in Royco Dawn"
+sidebarTitle: "Deposits & Withdrawals"
+description: "How to deposit into Royco Dawn tranches and vaults, how withdrawal epochs work, and what constraints apply during Observation Periods or high utilization."
+---
+
+Royco Dawn supports several ways for users to enter and exit positions across its tranched markets and vaults. Depending on your objective, you can buy or sell positions on secondary markets, mint or redeem tranche tokens directly, or deposit into and withdraw from ERC-4626 vaults. Each pathway has its own mechanics, constraints, and timing considerations — this page walks through each one in detail.
+
+## Acquiring and Disposing Positions
+
+The most straightforward way to gain or exit exposure is through decentralized AMM pools. Any vault share or individual tranche token (Senior or Junior) can be bought or sold permissionlessly using assets such as USDC or USDT on pools hosted by secondary market venues including LiFi, Curve, Balancer, and Uniswap.
+
+When a tranche purchase is routed via deposit rather than a direct AMM swap, the transaction is processed through the **RoycoEntryPoint** contract. The RoycoEntryPoint applies a per-market delay before the position settles and begins earning yield — this delay is a deliberate MEV and frontrunning protection mechanism. Depositors can pre-pay gas to enable auto-execution so their deposit is processed as soon as the delay window closes, without requiring a second transaction.
+
+## Direct Tranche Deposits and Redemptions
+
+Users can interact with any individual Senior or Junior Dawn market directly:
+
+- **Depositing** — Transfer the accepted asset into a Senior or Junior market and receive the corresponding tranche token. All tranche deposits route through the **RoycoEntryPoint**, which applies the same per-market delay described above.
+- **Redeeming** — Burn tranche tokens to receive the underlying asset. Redemptions are immediate at the protocol layer, but they are bounded by the liquidity available in the underlying yield source. If the underlying position carries a lock-up or a redemption window, the tranche inherits that constraint.
+
+Several conditions can restrict or pause withdrawals:
+
+- **Senior Protected Exit** — If a market reaches its Protected Exit Threshold, Senior depositors gain access to an immediate-exit option.
+- **Junior at 100% utilization** — If Junior's full balance is already backing Senior exposure (utilization at 100%), Junior withdrawals are restricted until either additional Junior capital enters the market or Senior capital exits.
+- **Observation Period** — During an active Observation Period for a given market, Senior withdrawals and new Junior deposits in that market are paused until the period concludes.
+
+## Direct Vault Deposits and Redemptions
+
+Royco Dawn's vaults — **srRoyUSDC** (accepts USDC) and **roywstETH** (accepts wstETH) — are ERC-4626 compliant. Depositing transfers the accepted reserve asset to the vault and returns a share token whose exchange rate accrues yield over time. Burning share tokens initiates a redemption.
+
+<Warning>
+  Vault redemptions are **not immediate**. They are processed through 30-day withdrawal epochs. Plan your liquidity needs well in advance — funds are not accessible the moment a withdrawal is requested.
+</Warning>
+
+### Vault Withdrawal Process
+
+<Steps>
+  <Step title="Submit a Withdrawal Request">
+    Initiate a redemption request through the official app at [royco.org](https://royco.org). Your request enters the currently open epoch queue.
+  </Step>
+  <Step title="Epoch Closes">
+    The open epoch closes on its scheduled 30-day cycle. All requests queued within that epoch are batched together for processing.
+  </Step>
+  <Step title="Processing Window">
+    Over an approximately 2-day processing window following epoch close, the vault sources the required liquidity from the underlying Senior tranches.
+  </Step>
+  <Step title="Claim Your Funds">
+    Once processing completes, your redeemed assets become claimable through the app. Return to [royco.org](https://royco.org) to claim.
+  </Step>
+</Steps>
+
+<Note>
+  Vault redemptions are subject to **KYC/KYB verification**. Identity verification must be completed before funds can be withdrawn from a vault. U.S. persons are not eligible to participate.
+</Note>
+
+If you need liquidity before an epoch closes, secondary AMM markets (LiFi, Curve, Balancer, Uniswap) may provide an alternative exit by selling your vault share tokens directly — though market depth and pricing will vary.
